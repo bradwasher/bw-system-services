@@ -1,0 +1,12 @@
+[Unit]
+Description=Host Signal Processor - Power Controls
+
+[Service]
+HOSTSIGNAL_DIRECTORY=/opt/ares/runtime/host-signal/
+ExecStart=/usr/local/sbin/hostsignal-powercontrol.sh ${HOSTSIGNAL_DIRECTORY}
+Restart=on-failure
+RestartSec=3
+Type=simple
+
+[Install]
+WantedBy=multi-user.target
