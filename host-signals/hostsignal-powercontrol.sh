@@ -22,9 +22,7 @@ mkdir -p ${HOSTSIGNAL_DIRECTORY}
 
 # clearing flags
 echo "[+] Clearing old flags from directory"
-rm -f ${HOSTSIGNAL_DIRECTORY}/reboot_signal
-rm -f ${HOSTSIGNAL_DIRECTORY}/shutdown_signal
-rm -f ${HOSTSIGNAL_DIRECTORY}/hibernate_signal
+rm -f ${HOSTSIGNAL_DIRECTORY}/*_signal
 
 
 echo "[+] Monitoring for power control file flags in ${HOSTSIGNAL_DIRECTORY}"
@@ -39,25 +37,25 @@ while true; do
 	if [ -f ${HOSTSIGNAL_DIRECTORY}/shutdown_signal ]; then
         	echo "[!] Shutting down host..."
 		sleep 3
-            	rm shutdown_signal
+            	rm ${HOSTSIGNAL_DIRECTORY}/shutdown_signal
 	    	shutdown -h now
     	
 	elif [ -f ${HOSTSIGNAL_DIRECTORY}/reboot_signal ]; then
 	     	echo "[!] Rebooting host..."
 		sleep 3
-     	     	rm reboot_signal
-		reboot     	     
+     	     	rm ${HOSTSIGNAL_DIRECTORY}/reboot_signal
+		reboot
      	
 	elif [ -f ${HOSTSIGNAL_DIRECTORY}/hibernate_signal ]; then
 		echo "[!] Hibernating host..."
 		sleep 3
-	    	rm hibernate_signal
+	    	rm ${HOSTSIGNAL_DIRECTORY}/hibernate_signal
 		systemctl hibernate
 	
 	elif [ -f ${HOSTSIGNAL_DIRECTORY}/suspend_signal ]; then
 		echo "[!] Suspending host..."
 		sleep 3
-		rm suspend_signal
+		rm ${HOSTSIGNAL_DIRECTORY}/suspend_signal
 		systemctl suspend
 	fi
 
